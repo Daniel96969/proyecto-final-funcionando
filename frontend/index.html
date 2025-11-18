@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PROYECTO FUNCIONANDO</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        button { background: #28a745; color: white; border: none; padding: 15px 25px; margin: 15px 0; cursor: pointer; border-radius: 5px; font-size: 16px; }
+        .result { background: #e9ecef; padding: 20px; margin: 15px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ PROYECTO FULL-STACK FUNCIONANDO</h1>
+        <p>Frontend + Backend conectados en Render</p>
+        
+        <button onclick="probarConexion()">PROBAR CONEXIÓN BACKEND</button>
+        
+        <div id="resultado" class="result">
+            Haz clic en el botón para probar la conexión
+        </div>
+
+        <div id="estado" class="result success">
+            Estado: Esperando prueba de conexión
+        </div>
+    </div>
+
+    <script>
+        async function probarConexion() {
+            try {
+                document.getElementById('resultado').innerHTML = '🔄 Conectando con el backend...';
+                document.getElementById('estado').innerHTML = 'Estado: Conectando...';
+                
+                // URL del backend - CAMBIARÁ cuando lo despliegues
+                const backendURL = 'https://tu-backend-final.onrender.com/api/mensaje';
+                
+                const respuesta = await fetch(backendURL);
+                const datos = await respuesta.json();
+                
+                document.getElementById('resultado').innerHTML = 
+                    `<strong>✅ CONEXIÓN EXITOSA</strong><br><br>
+                     <strong>Mensaje:</strong> ${datos.mensaje}<br>
+                     <strong>Hora:</strong> ${datos.timestamp}<br>
+                     <strong>Status:</strong> ${datos.status}`;
+                
+                document.getElementById('estado').innerHTML = 'Estado: ✅ CONEXIÓN ESTABLECIDA - Frontend y Backend comunicándose';
+                
+            } catch (error) {
+                document.getElementById('resultado').innerHTML = 
+                    `❌ Error de conexión: ${error.message}<br><br>
+                     <strong>Solución:</strong> Actualiza la variable backendURL en el código con tu URL real de Render`;
+                document.getElementById('estado').innerHTML = 'Estado: ❌ Error de conexión';
+            }
+        }
+    </script>
+</body>
+</html>
